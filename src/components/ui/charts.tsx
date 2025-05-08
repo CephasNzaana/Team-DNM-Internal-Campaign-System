@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import {
   Bar,
@@ -253,7 +252,7 @@ export const PieActiveArc = ({
           dataKey={category}
           cx="50%"
           cy="50%"
-          outerRadius={({ index: dataIndex }) => (activeIndex === dataIndex ? "85%" : "80%")}
+          outerRadius={({ index: dataIndex }) => (activeIndex === dataIndex ? 85 : 80)} // Fixed: Changed string percentages to numbers
           innerRadius="40%"
           paddingAngle={1}
           onMouseEnter={onPieEnter}
