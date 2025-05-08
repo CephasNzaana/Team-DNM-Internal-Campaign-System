@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import {
   Bar,
@@ -12,10 +13,27 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Sector
 } from 'recharts';
 
 import { ChartContainer, ChartTooltipContent } from "./chart"
+import { DNM_THEME } from "@/lib/theme";
+
+// Create a more diverse color palette with creamish colors
+const EXTENDED_COLORS = {
+  primary: DNM_THEME.colors.green,
+  secondary: DNM_THEME.colors.yellow,
+  tertiary: DNM_THEME.colors.red,
+  cream: "#FFF5D6", // Light cream
+  softCream: "#FEF7CD", // Soft cream yellow
+  warmCream: "#FDE1D3", // Warm cream/peach
+  lightGreen: "#8BC34A", // Light green
+  darkGreen: "#204020", // Darker green
+  softBlue: "#90CAF9", // Soft blue
+  softRed: "#FFCDD2", // Soft red
+  softPurple: "#D1C4E9", // Soft purple
+};
 
 interface ChartProps {
   data: any[];
@@ -33,7 +51,7 @@ export const BarChart = ({
   data,
   index,
   categories,
-  colors = ["#2563eb"],
+  colors = [EXTENDED_COLORS.primary, EXTENDED_COLORS.secondary],
   yAxisWidth = 40,
   height = 300,
   valueFormatter = (value: number) => value.toString(),
@@ -97,7 +115,7 @@ export const AreaChart = ({
   data,
   index,
   categories,
-  colors = ["#2563eb"],
+  colors = [EXTENDED_COLORS.primary, EXTENDED_COLORS.cream],
   yAxisWidth = 40,
   height = 300,
   valueFormatter = (value: number) => value.toString(),
@@ -169,7 +187,13 @@ export const PieChart = ({
   data,
   index,
   category,
-  colors = ["#2563eb", "#4ade80", "#f59e0b", "#ef4444", "#a855f7"],
+  colors = [
+    EXTENDED_COLORS.primary, 
+    EXTENDED_COLORS.lightGreen, 
+    EXTENDED_COLORS.secondary, 
+    EXTENDED_COLORS.softCream, 
+    EXTENDED_COLORS.warmCream
+  ],
   className,
 }: PieChartProps) => {
   const chartConfig = data.reduce((acc, item, i) => {
@@ -222,11 +246,47 @@ interface PieActiveArcProps {
   className?: string;
 }
 
+// Custom active shape for the pie chart
+const renderActiveShape = (props: any) => {
+  const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+  
+  return (
+    <g>
+      {/* Use Recharts' Sector component instead of a path with custom props */}
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={outerRadius}
+        outerRadius={outerRadius + 5}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        cornerRadius={5}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+    </g>
+  );
+};
+
 export const PieActiveArc = ({
   data,
   index,
   category,
-  colors = ["#2563eb", "#4ade80", "#f59e0b", "#ef4444", "#a855f7"],
+  colors = [
+    EXTENDED_COLORS.primary, 
+    EXTENDED_COLORS.lightGreen, 
+    EXTENDED_COLORS.cream, 
+    EXTENDED_COLORS.tertiary, 
+    EXTENDED_COLORS.softPurple
+  ],
   className,
 }: PieActiveArcProps) => {
   const [activeIndex, setActiveIndex] = React.useState<number | undefined>(undefined);
@@ -252,32 +312,9 @@ export const PieActiveArc = ({
           dataKey={category}
           cx="50%"
           cy="50%"
-          outerRadius={activeIndex !== undefined ? 80 : 75}
+          outerRadius={75}
           activeIndex={activeIndex}
-          activeShape={(props) => {
-            const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;
-            return (
-              <g>
-                <path 
-                  d={`M${cx},${cy}L${cx},${cy}`} 
-                  fill="none"
-                  stroke={fill}
-                  strokeWidth={10}
-                  startAngle={startAngle}
-                  endAngle={endAngle}
-                  outerRadius={85}
-                  innerRadius={outerRadius}
-                  cornerRadius={5}
-                />
-                {/* Use original arc shape */}
-                <path 
-                  d={props.arc}
-                  fill={fill}
-                  stroke="none"
-                />
-              </g>
-            );
-          }}
+          activeShape={renderActiveShape}
           innerRadius="40%"
           paddingAngle={1}
           onMouseEnter={onPieEnter}

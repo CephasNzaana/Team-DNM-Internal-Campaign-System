@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Card,
@@ -10,6 +9,17 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, AreaChart, PieChart, PieActiveArc } from '@/components/ui/charts';
 import { Badge } from "@/components/ui/badge";
+import { DNM_THEME } from '@/lib/theme';
+
+// Theme-consistent colors
+const chartColors = {
+  primary: DNM_THEME.colors.green,
+  secondary: DNM_THEME.colors.yellow,
+  tertiary: DNM_THEME.colors.red,
+  neutral: DNM_THEME.colors.cream,
+  warmNeutral: DNM_THEME.colors.warmCream,
+  light: DNM_THEME.colors.lightYellow,
+};
 
 const AnalyticsPage: React.FC = () => {
   // Sample analytics data
@@ -143,7 +153,7 @@ const AnalyticsPage: React.FC = () => {
                   data={voterData.monthlyEngagement}
                   index="name"
                   categories={["Interactions"]}
-                  colors={["green"]}
+                  colors={[chartColors.primary]}
                   yAxisWidth={40}
                   height={300}
                 />
@@ -160,7 +170,13 @@ const AnalyticsPage: React.FC = () => {
                   data={voterData.supportDistribution}
                   index="name"
                   category="value"
-                  colors={["#306030", "#4CAF50", "#FFC107", "#FF9800", "#F44336"]}
+                  colors={[
+                    chartColors.primary, 
+                    chartColors.secondary, 
+                    chartColors.neutral, 
+                    chartColors.warmNeutral, 
+                    chartColors.tertiary
+                  ]}
                   className="h-[300px]"
                 />
               </CardContent>

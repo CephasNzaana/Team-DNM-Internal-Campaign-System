@@ -7,6 +7,8 @@ export const DNM_THEME = {
     red: "#D90000",       // Critical alerts, important actions (from Uganda flag)
     green: "#306030",     // Primary brand color (from poster background)
     lightYellow: "#FFF5D6", // Background elements
+    cream: "#FEF7CD",     // Soft cream color
+    warmCream: "#FDE1D3", // Warm cream/peach
     white: "#FFFFFF",     // Text on dark backgrounds
     gray: "#6C757D",      // Secondary text
     lightGray: "#E9ECEF"  // Dividers, borders
