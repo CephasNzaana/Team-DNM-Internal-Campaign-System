@@ -44,7 +44,7 @@ const VoicemailTab: React.FC = () => {
       receivedAt: new Date('2025-05-08T09:15:00'),
       duration: 45, // 45 seconds
       recordingUrl: '/demo-recording-1.mp3',
-      transcription: 'Hello Hon. Nabaasa, this is John Kamugisha from Central Parish. I wanted to discuss the recent water supply issues in our area. We've been experiencing shortages for the past week, and I believe this is an important issue to address in your campaign. Please call me back at your earliest convenience. Thank you.',
+      transcription: `Hello Hon. Nabaasa, this is John Kamugisha from Central Parish. I wanted to discuss the recent water supply issues in our area. We've been experiencing shortages for the past week, and I believe this is an important issue to address in your campaign. Please call me back at your earliest convenience. Thank you.`,
       status: 'new',
       priority: 'high',
       category: 'complaint'
@@ -56,7 +56,7 @@ const VoicemailTab: React.FC = () => {
       receivedAt: new Date('2025-05-07T14:30:00'),
       duration: 30, // 30 seconds
       recordingUrl: '/demo-recording-2.mp3',
-      transcription: 'Good afternoon. This is Mary Kebirungi from the Women\'s Association. We would like to invite you to speak at our upcoming meeting on May 20th. Please let me know if you're available. You can reach me at this number. Thank you.',
+      transcription: `Good afternoon. This is Mary Kebirungi from the Women's Association. We would like to invite you to speak at our upcoming meeting on May 20th. Please let me know if you're available. You can reach me at this number. Thank you.`,
       status: 'reviewed',
       priority: 'medium',
       category: 'information'
@@ -68,7 +68,7 @@ const VoicemailTab: React.FC = () => {
       receivedAt: new Date('2025-05-07T11:45:00'),
       duration: 60, // 60 seconds
       recordingUrl: '/demo-recording-3.mp3',
-      transcription: 'Hello, this is David from Kabale FM. I'm calling to confirm your interview scheduled for tomorrow at 10 AM. Please arrive 15 minutes early for preparation. If there are any changes to your schedule, please let us know as soon as possible. Looking forward to the interview. Thank you.',
+      transcription: `Hello, this is David from Kabale FM. I'm calling to confirm your interview scheduled for tomorrow at 10 AM. Please arrive 15 minutes early for preparation. If there are any changes to your schedule, please let us know as soon as possible. Looking forward to the interview. Thank you.`,
       status: 'in_progress',
       priority: 'high',
       category: 'media'
@@ -80,7 +80,7 @@ const VoicemailTab: React.FC = () => {
       receivedAt: new Date('2025-05-06T16:20:00'),
       duration: 25, // 25 seconds
       recordingUrl: '/demo-recording-4.mp3',
-      transcription: 'Hi Hon. Nabaasa, this is Sarah calling. I just wanted to express my support for your campaign. Your focus on education reform resonates with me as a teacher. I would like to volunteer for your campaign if possible. Please call me back when you have time. Thank you and best of luck!',
+      transcription: `Hi Hon. Nabaasa, this is Sarah calling. I just wanted to express my support for your campaign. Your focus on education reform resonates with me as a teacher. I would like to volunteer for your campaign if possible. Please call me back when you have time. Thank you and best of luck!`,
       status: 'new',
       priority: 'medium',
       category: 'support'
@@ -92,7 +92,7 @@ const VoicemailTab: React.FC = () => {
       receivedAt: new Date('2025-05-05T08:50:00'),
       duration: 40, // 40 seconds
       recordingUrl: '/demo-recording-5.mp3',
-      transcription: 'Good morning, Hon. Nabaasa. This is Peter Byaruhanga, principal of Kabale Secondary School. We spoke last week about the educational initiatives in your platform. I have some additional thoughts I'd like to share with you. Please call me back at your convenience. Thank you.',
+      transcription: `Good morning, Hon. Nabaasa. This is Peter Byaruhanga, principal of Kabale Secondary School. We spoke last week about the educational initiatives in your platform. I have some additional thoughts I'd like to share with you. Please call me back at your convenience. Thank you.`,
       status: 'resolved',
       priority: 'medium',
       category: 'information',

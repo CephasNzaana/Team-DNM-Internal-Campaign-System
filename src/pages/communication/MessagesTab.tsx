@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, User, Send, RefreshCcw } from "lucide-react";
+import { Search, Plus, User, Send, RefreshCcw, MessageSquare } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Message {
@@ -38,7 +38,21 @@ const MessagesTab: React.FC = () => {
       senderName: 'James Mugisha',
       recipients: ['Dan Nabaasa'],
       subject: 'Community Meeting Follow-up',
-      content: 'Dear Hon. Nabaasa,\n\nThank you for attending the community meeting yesterday. The residents were very impressed with your presentation and had positive feedback about your plans for infrastructure development.\n\nI wanted to follow up on a few questions that were raised during the Q&A session:\n\n1. Timeline for the road improvement project\n2. Funding allocation for the new community center\n3. Plans for youth employment initiatives\n\nPlease let me know when you'd be available to discuss these matters further.\n\nBest regards,\nJames Mugisha\nCommunity Coordinator',
+      content: `Dear Hon. Nabaasa,
+
+Thank you for attending the community meeting yesterday. The residents were very impressed with your presentation and had positive feedback about your plans for infrastructure development.
+
+I wanted to follow up on a few questions that were raised during the Q&A session:
+
+1. Timeline for the road improvement project
+2. Funding allocation for the new community center
+3. Plans for youth employment initiatives
+
+Please let me know when you'd be available to discuss these matters further.
+
+Best regards,
+James Mugisha
+Community Coordinator`,
       priority: 'normal',
       sentAt: new Date('2025-05-07T10:30:00'),
       read: true
@@ -49,7 +63,19 @@ const MessagesTab: React.FC = () => {
       senderName: 'Sarah Atwine',
       recipients: ['Dan Nabaasa'],
       subject: 'Media Interview Request',
-      content: 'Hon. Nabaasa,\n\nI hope this message finds you well. I am writing on behalf of Kabale FM to request an interview with you regarding your campaign platform and vision for Kabale Municipality.\n\nWe would like to schedule this interview for next week, preferably on Tuesday or Wednesday morning. The interview would be approximately 30 minutes and would be broadcast live on our morning show.\n\nPlease let me know if this would be possible and your preferred date and time.\n\nThank you for your consideration.\n\nBest regards,\nSarah Atwine\nProgram Director, Kabale FM',
+      content: `Hon. Nabaasa,
+
+I hope this message finds you well. I am writing on behalf of Kabale FM to request an interview with you regarding your campaign platform and vision for Kabale Municipality.
+
+We would like to schedule this interview for next week, preferably on Tuesday or Wednesday morning. The interview would be approximately 30 minutes and would be broadcast live on our morning show.
+
+Please let me know if this would be possible and your preferred date and time.
+
+Thank you for your consideration.
+
+Best regards,
+Sarah Atwine
+Program Director, Kabale FM`,
       priority: 'high',
       sentAt: new Date('2025-05-06T15:45:00'),
       read: false
@@ -60,7 +86,18 @@ const MessagesTab: React.FC = () => {
       senderName: 'Robert Tumusiime',
       recipients: ['Dan Nabaasa'],
       subject: 'Urgent: Rally Location Change',
-      content: 'URGENT NOTICE\n\nDear Hon. Nabaasa,\n\nI must inform you that due to unexpected maintenance issues at Kabale Stadium, we need to relocate the youth rally scheduled for May 15th.\n\nWe have secured an alternative venue at the Municipal Grounds. All other details (date, time, program) remain unchanged.\n\nPlease confirm that you have received this message, as we need to start informing all attendees about the venue change immediately.\n\nRobert Tumusiime\nEvent Coordinator',
+      content: `URGENT NOTICE
+
+Dear Hon. Nabaasa,
+
+I must inform you that due to unexpected maintenance issues at Kabale Stadium, we need to relocate the youth rally scheduled for May 15th.
+
+We have secured an alternative venue at the Municipal Grounds. All other details (date, time, program) remain unchanged.
+
+Please confirm that you have received this message, as we need to start informing all attendees about the venue change immediately.
+
+Robert Tumusiime
+Event Coordinator`,
       priority: 'urgent',
       sentAt: new Date('2025-05-06T09:15:00'),
       read: false
@@ -71,7 +108,33 @@ const MessagesTab: React.FC = () => {
       senderName: 'Grace Kyarikunda',
       recipients: ['Dan Nabaasa'],
       subject: 'Weekly Campaign Update',
-      content: 'Hon. Nabaasa,\n\nHere is the weekly campaign update:\n\n1. Voter Engagement:\n   - 450 new voters contacted\n   - 12 small group meetings conducted\n   - Support level increased in Northern Parish\n\n2. Media Coverage:\n   - 3 newspaper articles published\n   - 2 radio interviews completed\n   - Social media engagement up by 15%\n\n3. Resource Utilization:\n   - Budget on track (82% of weekly allocation used)\n   - Volunteer hours: 245 (up from 210 last week)\n\nAdditional Notes:\n- Opposition activity has increased in Central Ward\n- Need to address water access concerns raised by Eastern Parish residents\n\nDetailed reports attached.\n\nRegards,\nGrace Kyarikunda\nCampaign Coordinator',
+      content: `Hon. Nabaasa,
+
+Here is the weekly campaign update:
+
+1. Voter Engagement:
+   - 450 new voters contacted
+   - 12 small group meetings conducted
+   - Support level increased in Northern Parish
+
+2. Media Coverage:
+   - 3 newspaper articles published
+   - 2 radio interviews completed
+   - Social media engagement up by 15%
+
+3. Resource Utilization:
+   - Budget on track (82% of weekly allocation used)
+   - Volunteer hours: 245 (up from 210 last week)
+
+Additional Notes:
+- Opposition activity has increased in Central Ward
+- Need to address water access concerns raised by Eastern Parish residents
+
+Detailed reports attached.
+
+Regards,
+Grace Kyarikunda
+Campaign Coordinator`,
       priority: 'normal',
       sentAt: new Date('2025-05-05T17:00:00'),
       read: true
@@ -82,7 +145,19 @@ const MessagesTab: React.FC = () => {
       senderName: 'Joseph Beinomugisha',
       recipients: ['Dan Nabaasa'],
       subject: 'Endorsement from Teachers Association',
-      content: 'Dear Hon. Nabaasa,\n\nI am pleased to inform you that the Kabale Teachers Association has voted to officially endorse your candidacy for MP.\n\nThey were particularly impressed with your education platform and commitment to improving teacher welfare and school infrastructure.\n\nThey would like to arrange a formal announcement event next week if your schedule permits.\n\nThis is a significant endorsement that could positively influence many voters in the education sector.\n\nBest regards,\nJoseph Beinomugisha\nOutreach Director',
+      content: `Dear Hon. Nabaasa,
+
+I am pleased to inform you that the Kabale Teachers Association has voted to officially endorse your candidacy for MP.
+
+They were particularly impressed with your education platform and commitment to improving teacher welfare and school infrastructure.
+
+They would like to arrange a formal announcement event next week if your schedule permits.
+
+This is a significant endorsement that could positively influence many voters in the education sector.
+
+Best regards,
+Joseph Beinomugisha
+Outreach Director`,
       priority: 'high',
       sentAt: new Date('2025-05-04T11:20:00'),
       read: true
