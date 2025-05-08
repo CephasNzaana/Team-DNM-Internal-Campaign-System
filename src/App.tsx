@@ -1,9 +1,18 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/Dashboard";
+import VotersPage from "./pages/voters/VotersPage";
+import EventsPage from "./pages/events/EventsPage";
+import TasksPage from "./pages/tasks/TasksPage";
+import CommunicationPage from "./pages/communication/CommunicationPage";
+import AnalyticsPage from "./pages/analytics/AnalyticsPage";
+import SettingsPage from "./pages/settings/SettingsPage";
+import AuthPage from "./pages/auth/AuthPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -15,8 +24,31 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/auth" element={<AuthPage />} />
+          
+          <Route element={<Layout />}>
+            <Route path="/" element={<Dashboard />} />
+            
+            <Route path="/voters" element={<VotersPage />} />
+            <Route path="/voters/segments" element={<VotersPage />} />
+            <Route path="/voters/interactions" element={<VotersPage />} />
+            
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/upcoming" element={<EventsPage />} />
+            <Route path="/events/past" element={<EventsPage />} />
+            
+            <Route path="/tasks" element={<TasksPage />} />
+            
+            <Route path="/communication" element={<CommunicationPage />} />
+            <Route path="/communication/messages" element={<CommunicationPage />} />
+            <Route path="/communication/voicemail" element={<CommunicationPage />} />
+            <Route path="/communication/calls" element={<CommunicationPage />} />
+            
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
