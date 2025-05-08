@@ -7,7 +7,7 @@ import MobileSidebar from './MobileSidebar';
 
 const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-[#FEF7CD]/30">
       <Header />
       
       <div className="flex-1 flex">

@@ -1,4 +1,3 @@
-
 // Team DNM Campaign System theme configuration
 export const DNM_THEME = {
   colors: {
@@ -6,9 +5,11 @@ export const DNM_THEME = {
     yellow: "#FFCE00",    // Accents, highlights (from Uganda flag)
     red: "#D90000",       // Critical alerts, important actions (from Uganda flag)
     green: "#306030",     // Primary brand color (from poster background)
+    oliveGreen: "#4A5D23", // Deeper campaign green for accents
     lightYellow: "#FFF5D6", // Background elements
-    cream: "#FEF7CD",     // Soft cream color
+    cream: "#FEF7CD",     // Soft cream color (from poster)
     warmCream: "#FDE1D3", // Warm cream/peach
+    softBeige: "#F5F0DC", // Soft beige (from poster background)
     white: "#FFFFFF",     // Text on dark backgrounds
     gray: "#6C757D",      // Secondary text
     lightGray: "#E9ECEF"  // Dividers, borders
