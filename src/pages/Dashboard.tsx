@@ -43,11 +43,11 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Campaign Hero Section */}
       <div className="bg-gradient-to-r from-[#306030] to-[#4A5D23] rounded-lg p-6 text-white shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 bottom-0 w-1/2 lg:w-2/5 overflow-hidden bg-[#F5F0DC]/10">
+        <div className="absolute top-0 right-0 bottom-0 w-1/4 overflow-hidden">
           <img 
             src="/lovable-uploads/4b0e8586-29c8-409e-a86c-4a005c2130fd.png" 
             alt="Dan Musinguzi Nabaasa"
-            className="h-full w-full object-cover opacity-90 mix-blend-overlay"
+            className="h-full w-full object-contain object-right-top"
           />
         </div>
         
@@ -69,8 +69,8 @@ const Dashboard: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap gap-3">
-            <Button className="bg-[#FFCE00] text-[#306030] hover:bg-[#FFCE00]/90">Campaign Updates</Button>
-            <Button variant="outline" className="text-white border-white hover:bg-white/20">Voter Database</Button>
+            <Button className="bg-[#FFCE00] text-black font-medium hover:bg-[#FFCE00]/90">Campaign Updates</Button>
+            <Button variant="outline" className="text-white border-white hover:bg-white/20 hover:text-black">Voter Database</Button>
           </div>
         </div>
       </div>

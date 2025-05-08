@@ -12,6 +12,7 @@ import TasksPage from "./pages/tasks/TasksPage";
 import CommunicationPage from "./pages/communication/CommunicationPage";
 import AnalyticsPage from "./pages/analytics/AnalyticsPage";
 import SettingsPage from "./pages/settings/SettingsPage";
+import TeamPage from "./pages/team/TeamPage";
 import AuthPage from "./pages/auth/AuthPage";
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +39,8 @@ const App = () => (
             <Route path="/events/past" element={<EventsPage />} />
             
             <Route path="/tasks" element={<TasksPage />} />
+            
+            <Route path="/team" element={<TeamPage />} />
             
             <Route path="/communication" element={<CommunicationPage />} />
             <Route path="/communication/messages" element={<CommunicationPage />} />
