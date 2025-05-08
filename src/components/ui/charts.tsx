@@ -252,7 +252,32 @@ export const PieActiveArc = ({
           dataKey={category}
           cx="50%"
           cy="50%"
-          outerRadius={({ index: dataIndex }) => (activeIndex === dataIndex ? 85 : 80)} // Fixed: Changed string percentages to numbers
+          outerRadius={activeIndex !== undefined ? 80 : 75}
+          activeIndex={activeIndex}
+          activeShape={(props) => {
+            const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;
+            return (
+              <g>
+                <path 
+                  d={`M${cx},${cy}L${cx},${cy}`} 
+                  fill="none"
+                  stroke={fill}
+                  strokeWidth={10}
+                  startAngle={startAngle}
+                  endAngle={endAngle}
+                  outerRadius={85}
+                  innerRadius={outerRadius}
+                  cornerRadius={5}
+                />
+                {/* Use original arc shape */}
+                <path 
+                  d={props.arc}
+                  fill={fill}
+                  stroke="none"
+                />
+              </g>
+            );
+          }}
           innerRadius="40%"
           paddingAngle={1}
           onMouseEnter={onPieEnter}
