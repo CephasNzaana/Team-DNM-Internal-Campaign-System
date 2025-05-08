@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, AreaChart, PieChart, PieActiveArc } from '@/components/ui/chart';
+import { BarChart, AreaChart, PieChart, PieActiveArc } from '@/components/ui/charts';
 import { Badge } from "@/components/ui/badge";
 
 const AnalyticsPage: React.FC = () => {
