@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,10 +6,51 @@ import { Button } from '@/components/ui/button';
 import { Plus, Search, Filter, UserPlus, Phone } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { AGENT_DATABASE } from '@/types/campaign';
+import { Progress } from '@/components/ui/progress';
+
+// Support level renderer component
+const SupportLevelIndicator = ({ level }: { level?: number }) => {
+  const getSupportLevelColor = (level?: number) => {
+    switch(level) {
+      case 1: return 'bg-red-500';
+      case 2: return 'bg-orange-400';
+      case 3: return 'bg-yellow-400';
+      case 4: return 'bg-green-400';
+      case 5: return 'bg-green-600';
+      default: return 'bg-gray-300';
+    }
+  };
+
+  const getSupportLevelText = (level?: number) => {
+    switch(level) {
+      case 1: return 'Opposed';
+      case 2: return 'Leaning Against';
+      case 3: return 'Undecided';
+      case 4: return 'Leaning Support';
+      case 5: return 'Strong Support';
+      default: return 'Not Assessed';
+    }
+  };
+
+  return (
+    <div className="flex flex-col space-y-1">
+      <div className="flex items-center space-x-2">
+        <Progress value={(level || 0) * 20} className={`h-2 w-24 ${getSupportLevelColor(level)}`} />
+        <span className="text-xs font-medium">{getSupportLevelText(level)}</span>
+      </div>
+    </div>
+  );
+};
 
 const VotersPage: React.FC = () => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Add mock support levels to voters
+  const votersWithSupportLevels = AGENT_DATABASE.map((voter, index) => ({
+    ...voter,
+    supportLevel: (index % 5) + 1 as 1 | 2 | 3 | 4 | 5
+  }));
   
   // Determine which tab should be active based on URL
   const getDefaultTab = () => {
@@ -20,7 +60,7 @@ const VotersPage: React.FC = () => {
   };
 
   // Filter voters based on search query
-  const filteredVoters = AGENT_DATABASE.filter(voter => 
+  const filteredVoters = votersWithSupportLevels.filter(voter => 
     voter.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     voter.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
     voter.pollingStation.toLowerCase().includes(searchQuery.toLowerCase())
@@ -80,12 +120,13 @@ const VotersPage: React.FC = () => {
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Polling Station</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Support Level</th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {filteredVoters.map(voter => (
-                      <tr key={voter.id}>
+                    {filteredVoters.map((voter, index) => (
+                      <tr key={voter.id || index}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="font-medium">{voter.fullName}</div>
                           <div className="text-sm text-gray-500">Mobilizer: {voter.mobilizer}</div>
@@ -102,11 +143,14 @@ const VotersPage: React.FC = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {voter.pollingStation}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <SupportLevelIndicator level={voter.supportLevel} />
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <Link to={`/voters/${voter.id}`} className="text-[#306030] hover:text-[#306030]/80 mr-3">
+                          <Link to={`/voters/${voter.id || index}`} className="text-[#306030] hover:text-[#306030]/80 mr-3">
                             View
                           </Link>
-                          <Link to={`/voters/${voter.id}/edit`} className="text-[#FFCE00] hover:text-[#FFCE00]/80">
+                          <Link to={`/voters/${voter.id || index}/edit`} className="text-[#FFCE00] hover:text-[#FFCE00]/80">
                             Edit
                           </Link>
                         </td>

@@ -8,3 +8,23 @@
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
 </IfModule>
+
+# Proper MIME type for JavaScript modules
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType application/javascript .mjs
+  AddType text/javascript .js
+  AddType text/javascript .mjs
+</IfModule>
+
+# Enable CORS
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|mjs|html|css)$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+  </FilesMatch>
+</IfModule>
+
+# Handle SPA routes
+ErrorDocument 404 /index.html
