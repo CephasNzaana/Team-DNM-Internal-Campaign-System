@@ -4,9 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { MessagesTab } from './MessagesTab';
-import { VoicemailTab } from './VoicemailTab';
-import { CallManagementTab } from './CallManagementTab';
+import MessagesTab from './MessagesTab';
+import VoicemailTab from './VoicemailTab';
+import CallManagementTab from './CallManagementTab';
 import { MessageSquare, Phone, VoicemailIcon, PenSquare } from 'lucide-react';
 import { DNM_THEME } from '@/lib/theme';
 
