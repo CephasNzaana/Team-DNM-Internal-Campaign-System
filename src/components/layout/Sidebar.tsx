@@ -10,7 +10,8 @@ import {
   BarChart, 
   Settings,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
+  UserCheck
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -67,6 +68,7 @@ const Sidebar: React.FC = () => {
   const [votersOpen, setVotersOpen] = useState(false);
   const [eventsOpen, setEventsOpen] = useState(false);
   const [communicationOpen, setCommunicationOpen] = useState(false);
+  const [agentsOpen, setAgentsOpen] = useState(false);
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -100,6 +102,26 @@ const Sidebar: React.FC = () => {
           <Link to="/voters/interactions" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
             Interactions
           </Link>
+          <Link to="/voters/add" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Add Voter
+          </Link>
+        </SidebarItem>
+        
+        <SidebarItem 
+          icon={<UserCheck size={20} />} 
+          label="Agents" 
+          to="/agents"
+          isActive={isActive('/agents') || location.pathname.startsWith('/agents/')} 
+          hasSubmenu={true}
+          isOpen={agentsOpen}
+          onClick={() => setAgentsOpen(!agentsOpen)}
+        >
+          <Link to="/agents" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            All Agents
+          </Link>
+          <Link to="/agents/add" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Add Agent
+          </Link>
         </SidebarItem>
         
         <SidebarItem 
@@ -120,9 +142,14 @@ const Sidebar: React.FC = () => {
           <Link to="/events/past" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
             Past Events
           </Link>
+          <Link to="/events/new" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            New Event
+          </Link>
         </SidebarItem>
         
         <SidebarItem icon={<CheckSquare size={20} />} label="Tasks" to="/tasks" isActive={isActive('/tasks')} />
+        
+        <SidebarItem icon={<Users size={20} />} label="Team" to="/team" isActive={isActive('/team') || location.pathname.startsWith('/team/')} />
         
         <SidebarItem 
           icon={<MessageSquare size={20} />} 
@@ -141,6 +168,9 @@ const Sidebar: React.FC = () => {
           </Link>
           <Link to="/communication/calls" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
             Call Management
+          </Link>
+          <Link to="/communication/messages/compose" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Compose Message
           </Link>
         </SidebarItem>
         

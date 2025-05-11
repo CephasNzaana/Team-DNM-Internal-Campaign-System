@@ -13,6 +13,8 @@ import CommunicationPage from "./pages/communication/CommunicationPage";
 import AnalyticsPage from "./pages/analytics/AnalyticsPage";
 import SettingsPage from "./pages/settings/SettingsPage";
 import TeamPage from "./pages/team/TeamPage";
+import AgentsPage from "./pages/agents/AgentsPage";
+import AddAgentPage from "./pages/agents/AddAgentPage";
 import AuthPage from "./pages/auth/AuthPage";
 import NotFound from "./pages/NotFound";
 
@@ -40,6 +42,11 @@ const App = () => (
             <Route path="/voters/segments/:id" element={<VotersPage />} />
             <Route path="/voters/interactions/new" element={<VotersPage />} />
             
+            <Route path="/agents" element={<AgentsPage />} />
+            <Route path="/agents/add" element={<AddAgentPage />} />
+            <Route path="/agents/:id" element={<AgentsPage />} />
+            <Route path="/agents/:id/edit" element={<AgentsPage />} />
+            
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/upcoming" element={<EventsPage />} />
             <Route path="/events/past" element={<EventsPage />} />
@@ -49,6 +56,9 @@ const App = () => (
             <Route path="/tasks" element={<TasksPage />} />
             
             <Route path="/team" element={<TeamPage />} />
+            <Route path="/team/add" element={<TeamPage />} />
+            <Route path="/team/:id" element={<TeamPage />} />
+            <Route path="/team/:id/edit" element={<TeamPage />} />
             
             <Route path="/communication" element={<CommunicationPage />} />
             <Route path="/communication/messages" element={<CommunicationPage />} />
