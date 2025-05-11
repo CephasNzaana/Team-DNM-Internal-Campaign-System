@@ -69,6 +69,8 @@ const Sidebar: React.FC = () => {
   const [eventsOpen, setEventsOpen] = useState(false);
   const [communicationOpen, setCommunicationOpen] = useState(false);
   const [agentsOpen, setAgentsOpen] = useState(false);
+  const [tasksOpen, setTasksOpen] = useState(false);
+  const [teamOpen, setTeamOpen] = useState(false);
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -147,9 +149,39 @@ const Sidebar: React.FC = () => {
           </Link>
         </SidebarItem>
         
-        <SidebarItem icon={<CheckSquare size={20} />} label="Tasks" to="/tasks" isActive={isActive('/tasks')} />
+        <SidebarItem 
+          icon={<CheckSquare size={20} />} 
+          label="Tasks" 
+          to="/tasks"
+          isActive={isActive('/tasks') || location.pathname.startsWith('/tasks/')} 
+          hasSubmenu={true}
+          isOpen={tasksOpen}
+          onClick={() => setTasksOpen(!tasksOpen)}
+        >
+          <Link to="/tasks" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            All Tasks
+          </Link>
+          <Link to="/tasks/add" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Create Task
+          </Link>
+        </SidebarItem>
         
-        <SidebarItem icon={<Users size={20} />} label="Team" to="/team" isActive={isActive('/team') || location.pathname.startsWith('/team/')} />
+        <SidebarItem 
+          icon={<Users size={20} />} 
+          label="Team" 
+          to="/team" 
+          isActive={isActive('/team') || location.pathname.startsWith('/team/')} 
+          hasSubmenu={true}
+          isOpen={teamOpen}
+          onClick={() => setTeamOpen(!teamOpen)}
+        >
+          <Link to="/team" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Team Members
+          </Link>
+          <Link to="/team/add" className="block px-4 py-2 text-sm text-gray-300 hover:bg-green-800 hover:text-white rounded-md">
+            Add Team Member
+          </Link>
+        </SidebarItem>
         
         <SidebarItem 
           icon={<MessageSquare size={20} />} 

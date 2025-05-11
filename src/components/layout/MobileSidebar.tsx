@@ -72,6 +72,8 @@ const MobileSidebar: React.FC = () => {
   const [eventsOpen, setEventsOpen] = useState(false);
   const [communicationOpen, setCommunicationOpen] = useState(false);
   const [agentsOpen, setAgentsOpen] = useState(false);
+  const [tasksOpen, setTasksOpen] = useState(false);
+  const [teamOpen, setTeamOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path: string) => {
@@ -165,9 +167,39 @@ const MobileSidebar: React.FC = () => {
                 </Link>
               </SidebarItem>
               
-              <SidebarItem icon={<CheckSquare size={20} />} label="Tasks" to="/tasks" isActive={isActive('/tasks')} onClick={() => setIsOpen(false)} />
+              <SidebarItem 
+                icon={<CheckSquare size={20} />} 
+                label="Tasks" 
+                to="/tasks"
+                isActive={isActive('/tasks') || location.pathname.startsWith('/tasks/')} 
+                hasSubmenu={true}
+                isOpen={tasksOpen}
+                onClick={() => setTasksOpen(!tasksOpen)}
+              >
+                <Link to="/tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-md" onClick={() => setIsOpen(false)}>
+                  All Tasks
+                </Link>
+                <Link to="/tasks/add" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-md" onClick={() => setIsOpen(false)}>
+                  Create Task
+                </Link>
+              </SidebarItem>
 
-              <SidebarItem icon={<Users size={20} />} label="Team" to="/team" isActive={isActive('/team')} onClick={() => setIsOpen(false)} />
+              <SidebarItem 
+                icon={<Users size={20} />} 
+                label="Team" 
+                to="/team"
+                isActive={isActive('/team') || location.pathname.startsWith('/team/')} 
+                hasSubmenu={true}
+                isOpen={teamOpen}
+                onClick={() => setTeamOpen(!teamOpen)}
+              >
+                <Link to="/team" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-md" onClick={() => setIsOpen(false)}>
+                  Team Members
+                </Link>
+                <Link to="/team/add" className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-md" onClick={() => setIsOpen(false)}>
+                  Add Team Member
+                </Link>
+              </SidebarItem>
               
               <SidebarItem 
                 icon={<MessageSquare size={20} />} 

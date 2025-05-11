@@ -1,9 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Menu, User, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DNM_THEME } from '@/lib/theme';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header: React.FC = () => {
   return (
@@ -36,11 +44,29 @@ const Header: React.FC = () => {
             <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-[#D90000]"></span>
           </Button>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="flex items-center text-white hover:bg-green-700">
-              <User size={20} className="mr-2" />
-              <span className="hidden md:inline">Account</span>
-              <ChevronDown size={16} className="ml-1" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="flex items-center text-white hover:bg-green-700">
+                  <User size={20} className="mr-2" />
+                  <span className="hidden md:inline">Account</span>
+                  <ChevronDown size={16} className="ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/account" className="cursor-pointer">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings" className="cursor-pointer">Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/auth" className="cursor-pointer text-red-600">Logout</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

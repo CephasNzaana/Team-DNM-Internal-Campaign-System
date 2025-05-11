@@ -7,14 +7,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import VotersPage from "./pages/voters/VotersPage";
+import AddVoterPage from "./pages/voters/AddVoterPage";
 import EventsPage from "./pages/events/EventsPage";
+import AddEventPage from "./pages/events/AddEventPage";
 import TasksPage from "./pages/tasks/TasksPage";
+import AddTaskPage from "./pages/tasks/AddTaskPage";
 import CommunicationPage from "./pages/communication/CommunicationPage";
+import ComposeMessagePage from "./pages/communication/ComposeMessagePage";
 import AnalyticsPage from "./pages/analytics/AnalyticsPage";
 import SettingsPage from "./pages/settings/SettingsPage";
 import TeamPage from "./pages/team/TeamPage";
+import AddTeamMemberPage from "./pages/team/AddTeamMemberPage";
 import AgentsPage from "./pages/agents/AgentsPage";
 import AddAgentPage from "./pages/agents/AddAgentPage";
+import AccountPage from "./pages/account/AccountPage";
 import AuthPage from "./pages/auth/AuthPage";
 import NotFound from "./pages/NotFound";
 
@@ -33,9 +39,9 @@ const App = () => (
             <Route path="/" element={<Dashboard />} />
             
             <Route path="/voters" element={<VotersPage />} />
+            <Route path="/voters/add" element={<AddVoterPage />} />
             <Route path="/voters/segments" element={<VotersPage />} />
             <Route path="/voters/interactions" element={<VotersPage />} />
-            <Route path="/voters/add" element={<VotersPage />} />
             <Route path="/voters/:id" element={<VotersPage />} />
             <Route path="/voters/:id/edit" element={<VotersPage />} />
             <Route path="/voters/segments/new" element={<VotersPage />} />
@@ -48,26 +54,29 @@ const App = () => (
             <Route path="/agents/:id/edit" element={<AgentsPage />} />
             
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/add" element={<AddEventPage />} />
             <Route path="/events/upcoming" element={<EventsPage />} />
             <Route path="/events/past" element={<EventsPage />} />
-            <Route path="/events/new" element={<EventsPage />} />
+            <Route path="/events/new" element={<AddEventPage />} />
             <Route path="/events/:id" element={<EventsPage />} />
             
             <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/tasks/add" element={<AddTaskPage />} />
             
             <Route path="/team" element={<TeamPage />} />
-            <Route path="/team/add" element={<TeamPage />} />
+            <Route path="/team/add" element={<AddTeamMemberPage />} />
             <Route path="/team/:id" element={<TeamPage />} />
             <Route path="/team/:id/edit" element={<TeamPage />} />
             
             <Route path="/communication" element={<CommunicationPage />} />
+            <Route path="/communication/messages/compose" element={<ComposeMessagePage />} />
             <Route path="/communication/messages" element={<CommunicationPage />} />
             <Route path="/communication/voicemail" element={<CommunicationPage />} />
             <Route path="/communication/calls" element={<CommunicationPage />} />
-            <Route path="/communication/messages/compose" element={<CommunicationPage />} />
             
             <Route path="/analytics" element={<AnalyticsPage />} />
             
+            <Route path="/account" element={<AccountPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
           
