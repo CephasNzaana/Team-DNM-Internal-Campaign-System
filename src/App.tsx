@@ -33,10 +33,18 @@ const App = () => (
             <Route path="/voters" element={<VotersPage />} />
             <Route path="/voters/segments" element={<VotersPage />} />
             <Route path="/voters/interactions" element={<VotersPage />} />
+            <Route path="/voters/add" element={<VotersPage />} />
+            <Route path="/voters/:id" element={<VotersPage />} />
+            <Route path="/voters/:id/edit" element={<VotersPage />} />
+            <Route path="/voters/segments/new" element={<VotersPage />} />
+            <Route path="/voters/segments/:id" element={<VotersPage />} />
+            <Route path="/voters/interactions/new" element={<VotersPage />} />
             
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/upcoming" element={<EventsPage />} />
             <Route path="/events/past" element={<EventsPage />} />
+            <Route path="/events/new" element={<EventsPage />} />
+            <Route path="/events/:id" element={<EventsPage />} />
             
             <Route path="/tasks" element={<TasksPage />} />
             
@@ -46,6 +54,7 @@ const App = () => (
             <Route path="/communication/messages" element={<CommunicationPage />} />
             <Route path="/communication/voicemail" element={<CommunicationPage />} />
             <Route path="/communication/calls" element={<CommunicationPage />} />
+            <Route path="/communication/messages/compose" element={<CommunicationPage />} />
             
             <Route path="/analytics" element={<AnalyticsPage />} />
             

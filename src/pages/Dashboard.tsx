@@ -6,6 +6,7 @@ import { BarChart, Users, Calendar, CheckSquare, MessageSquare, BarChart2, Trend
 import { PieChart } from '@/components/ui/charts';
 import { Button } from '@/components/ui/button';
 import { DNM_THEME } from '@/lib/theme';
+import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   // Mock data for dashboard with real campaign messaging
@@ -18,9 +19,9 @@ const Dashboard: React.FC = () => {
   };
   
   const upcomingEvents = [
-    { id: 1, title: 'Community Meeting', date: '2025-05-10', location: 'Kabale Town Hall', type: 'meeting' },
-    { id: 2, title: 'Door-to-door Campaign', date: '2025-05-12', location: 'Central Ward', type: 'canvassing' },
-    { id: 3, title: 'Youth Rally', date: '2025-05-15', location: 'Kabale Stadium', type: 'rally' },
+    { id: 1, title: 'Community Meeting', date: '2025-05-15', location: 'Kabale Town Hall', type: 'meeting' },
+    { id: 2, title: 'Door-to-door Campaign', date: '2025-05-18', location: 'Central Ward', type: 'canvassing' },
+    { id: 3, title: 'Youth Rally', date: '2025-05-22', location: 'Kabale Stadium', type: 'rally' },
   ];
   
   const taskStats = {
@@ -43,11 +44,12 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Campaign Hero Section */}
       <div className="bg-gradient-to-r from-[#306030] to-[#4A5D23] rounded-lg p-6 text-white shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 bottom-0 w-1/4 overflow-hidden">
+        {/* Positioned image in a circle frame in the top-right corner */}
+        <div className="absolute top-6 right-8 h-32 w-32 overflow-hidden rounded-full border-4 border-[#FFCE00] shadow-lg">
           <img 
             src="/lovable-uploads/4b0e8586-29c8-409e-a86c-4a005c2130fd.png" 
             alt="Dan Musinguzi Nabaasa"
-            className="h-full w-full object-contain object-right-top"
+            className="h-full w-full object-cover"
           />
         </div>
         
@@ -69,57 +71,69 @@ const Dashboard: React.FC = () => {
           </p>
           
           <div className="flex flex-wrap gap-3">
-            <Button className="bg-[#FFCE00] text-black font-medium hover:bg-[#FFCE00]/90">Campaign Updates</Button>
-            <Button variant="outline" className="text-white border-white hover:bg-white/20 hover:text-black">Voter Database</Button>
+            <Link to="/events">
+              <Button className="bg-[#FFCE00] text-black font-medium hover:bg-[#FFCE00]/90">Campaign Updates</Button>
+            </Link>
+            <Link to="/voters">
+              <Button variant="outline" className="border-white text-black bg-white hover:bg-white/90 hover:text-black">Voter Database</Button>
+            </Link>
           </div>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-[#306030]">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Voters</CardTitle>
-            <Users size={18} className="text-[#306030]" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{voterStats.total.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">Registered in Kabale Municipality</p>
-          </CardContent>
-        </Card>
+        <Link to="/voters" className="block">
+          <Card className="border-l-4 border-l-[#306030] hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Voters</CardTitle>
+              <Users size={18} className="text-[#306030]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{voterStats.total.toLocaleString()}</div>
+              <p className="text-xs text-muted-foreground">Registered in Kabale Municipality</p>
+            </CardContent>
+          </Card>
+        </Link>
         
-        <Card className="border-l-4 border-l-[#FFCE00]">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Supporter Rate</CardTitle>
-            <BarChart size={18} className="text-[#FFCE00]" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{voterStats.supportPercentage}%</div>
-            <Progress value={voterStats.supportPercentage} className="h-2 mt-2 bg-gray-200" 
-              style={{background: DNM_THEME.colors.lightGray}} />
-          </CardContent>
-        </Card>
+        <Link to="/analytics" className="block">
+          <Card className="border-l-4 border-l-[#FFCE00] hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Supporter Rate</CardTitle>
+              <BarChart size={18} className="text-[#FFCE00]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{voterStats.supportPercentage}%</div>
+              <Progress value={voterStats.supportPercentage} className="h-2 mt-2 bg-gray-200" 
+                style={{background: DNM_THEME.colors.lightGray}} />
+            </CardContent>
+          </Card>
+        </Link>
         
-        <Card className="border-l-4 border-l-[#D90000]">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
-            <Calendar size={18} className="text-[#D90000]" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{upcomingEvents.length}</div>
-            <p className="text-xs text-muted-foreground">Next: {upcomingEvents[0].title}</p>
-          </CardContent>
-        </Card>
+        <Link to="/events" className="block">
+          <Card className="border-l-4 border-l-[#D90000] hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
+              <Calendar size={18} className="text-[#D90000]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{upcomingEvents.length}</div>
+              <p className="text-xs text-muted-foreground">Next: {upcomingEvents[0].title}</p>
+            </CardContent>
+          </Card>
+        </Link>
         
-        <Card className="border-l-4 border-l-[#4A5D23]">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Task Completion</CardTitle>
-            <CheckSquare size={18} className="text-[#4A5D23]" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{taskStats.completionRate}%</div>
-            <Progress value={taskStats.completionRate} className="h-2 mt-2 bg-gray-200" />
-          </CardContent>
-        </Card>
+        <Link to="/tasks" className="block">
+          <Card className="border-l-4 border-l-[#4A5D23] hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Task Completion</CardTitle>
+              <CheckSquare size={18} className="text-[#4A5D23]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{taskStats.completionRate}%</div>
+              <Progress value={taskStats.completionRate} className="h-2 mt-2 bg-gray-200" />
+            </CardContent>
+          </Card>
+        </Link>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -186,7 +200,9 @@ const Dashboard: React.FC = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">View All Events</Button>
+            <Link to="/events">
+              <Button variant="outline" className="w-full">View All Events</Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>
@@ -282,7 +298,7 @@ const Dashboard: React.FC = () => {
   );
 };
 
-// I need to create a Badge component for the event types
+// Badge component for the event types
 const Badge = ({ 
   children, 
   variant = 'default',

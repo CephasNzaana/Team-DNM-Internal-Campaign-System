@@ -1,199 +1,153 @@
 
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Calendar as CalendarIcon, Plus, Users, MapPin, Clock } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar as CalendarIcon, MapPin, Users, Clock, Plus } from 'lucide-react';
+import { DNM_THEME } from '@/lib/theme';
 
-interface CampaignEvent {
-  id: string;
-  title: string;
-  description: string;
-  eventType: 'rally' | 'meeting' | 'canvassing' | 'fundraiser' | 'media' | 'other';
-  startTime: Date;
-  endTime: Date;
-  location: {
-    name: string;
-    address: string;
-    parish: string;
-  };
-  expectedAttendance: number;
-  status: 'planned' | 'active' | 'completed' | 'cancelled';
-}
+// Mock data for events
+const events = [
+  { 
+    id: 1, 
+    title: 'Community Meeting', 
+    date: new Date('2025-05-15'), 
+    location: 'Kabale Town Hall', 
+    type: 'meeting',
+    description: 'Discussion on local infrastructure development and community needs.',
+    attendees: 45,
+  },
+  { 
+    id: 2, 
+    title: 'Door-to-door Campaign', 
+    date: new Date('2025-05-18'), 
+    location: 'Central Ward', 
+    type: 'canvassing',
+    description: 'Direct voter outreach to understand key issues and build support.',
+    attendees: 12,
+  },
+  { 
+    id: 3, 
+    title: 'Youth Rally', 
+    date: new Date('2025-05-22'), 
+    location: 'Kabale Stadium', 
+    type: 'rally',
+    description: 'Engaging young voters on education and employment opportunities.',
+    attendees: 220,
+  },
+  { 
+    id: 4, 
+    title: 'Fundraising Dinner', 
+    date: new Date('2025-06-05'), 
+    location: 'White Horse Hotel', 
+    type: 'fundraiser',
+    description: 'Key fundraising event for campaign activities and materials.',
+    attendees: 80,
+  },
+  { 
+    id: 5, 
+    title: 'Market Visit', 
+    date: new Date('2025-06-12'), 
+    location: 'Kabale Central Market', 
+    type: 'canvassing',
+    description: 'Meeting traders and discussing economic policies.',
+    attendees: 55,
+  },
+];
 
 const EventsPage: React.FC = () => {
+  const location = useLocation();
   const [date, setDate] = useState<Date | undefined>(new Date());
   
-  // Sample event data
-  const events: CampaignEvent[] = [
-    {
-      id: '1',
-      title: 'Community Town Hall Meeting',
-      description: 'Discussing local issues and presenting campaign platform to the community.',
-      eventType: 'meeting',
-      startTime: new Date('2025-05-10T14:00:00'),
-      endTime: new Date('2025-05-10T16:00:00'),
-      location: {
-        name: 'Kabale Town Hall',
-        address: 'Central Road',
-        parish: 'Central Parish',
-      },
-      expectedAttendance: 150,
-      status: 'planned'
-    },
-    {
-      id: '2',
-      title: 'Door-to-door Campaign',
-      description: 'Canvassing in Central Ward to meet voters directly.',
-      eventType: 'canvassing',
-      startTime: new Date('2025-05-12T09:00:00'),
-      endTime: new Date('2025-05-12T17:00:00'),
-      location: {
-        name: 'Central Ward',
-        address: 'Various locations',
-        parish: 'Central Parish',
-      },
-      expectedAttendance: 200,
-      status: 'planned'
-    },
-    {
-      id: '3',
-      title: 'Youth Rally',
-      description: 'Engaging with young voters and discussing education and employment opportunities.',
-      eventType: 'rally',
-      startTime: new Date('2025-05-15T15:00:00'),
-      endTime: new Date('2025-05-15T18:00:00'),
-      location: {
-        name: 'Kabale Stadium',
-        address: 'Stadium Road',
-        parish: 'Western Parish',
-      },
-      expectedAttendance: 500,
-      status: 'planned'
-    },
-    {
-      id: '4',
-      title: 'Media Interview',
-      description: 'Interview with local radio station about campaign platform.',
-      eventType: 'media',
-      startTime: new Date('2025-05-05T10:00:00'),
-      endTime: new Date('2025-05-05T11:00:00'),
-      location: {
-        name: 'Kabale FM',
-        address: 'Main Street',
-        parish: 'Northern Parish',
-      },
-      expectedAttendance: 10,
-      status: 'completed'
-    },
-  ];
-  
-  const getEventTypeBadge = (type: string) => {
-    switch (type) {
-      case 'rally':
-        return <Badge className="bg-red-600">Rally</Badge>;
-      case 'meeting':
-        return <Badge className="bg-blue-600">Meeting</Badge>;
-      case 'canvassing':
-        return <Badge className="bg-green-600">Canvassing</Badge>;
-      case 'fundraiser':
-        return <Badge className="bg-purple-600">Fundraiser</Badge>;
-      case 'media':
-        return <Badge className="bg-yellow-600">Media</Badge>;
-      default:
-        return <Badge>Other</Badge>;
-    }
+  // Determine which tab should be active based on URL
+  const getDefaultTab = () => {
+    if (location.pathname.includes('/events/upcoming')) return 'upcoming';
+    if (location.pathname.includes('/events/past')) return 'past';
+    return 'calendar';
   };
-  
-  const upcomingEvents = events.filter(event => 
-    event.startTime > new Date() && event.status !== 'cancelled'
-  ).sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-  
-  const pastEvents = events.filter(event => 
-    event.startTime <= new Date() || event.status === 'completed'
-  ).sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+
+  // Filter events
+  const today = new Date();
+  const upcomingEvents = events.filter(event => event.date > today);
+  const pastEvents = events.filter(event => event.date <= today);
   
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Campaign Events</h1>
-          <p className="text-muted-foreground">Manage and schedule campaign activities</p>
+          <h1 className="text-3xl font-bold tracking-tight">Campaign Events</h1>
+          <p className="text-muted-foreground">
+            Manage all campaign activities and engagements across Kabale Municipality.
+          </p>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Create Event
-        </Button>
+        <Link to="/events/new">
+          <Button className="bg-[#306030] hover:bg-[#306030]/90">
+            <Plus className="mr-2 h-4 w-4" />
+            Create Event
+          </Button>
+        </Link>
       </div>
       
-      <Tabs defaultValue="calendar" className="w-full">
-        <TabsList className="grid w-full md:w-auto grid-cols-3">
+      <Tabs defaultValue={getDefaultTab()} className="w-full">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 gap-4">
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
           <TabsTrigger value="past">Past Events</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="calendar" className="p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardContent className="pt-6">
+        <TabsContent value="calendar" className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <Card className="col-span-1 md:col-span-2">
+              <CardHeader>
+                <CardTitle>Event Calendar</CardTitle>
+                <CardDescription>Select a date to view events</CardDescription>
+              </CardHeader>
+              <CardContent>
                 <Calendar
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  className="rounded-md border pointer-events-auto"
+                  className="border rounded-md"
                 />
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="col-span-1 md:col-span-3">
               <CardHeader>
-                <CardTitle>Events on {date?.toLocaleDateString()}</CardTitle>
-                <CardDescription>
-                  Campaign activities scheduled for this date
-                </CardDescription>
+                <CardTitle>Events for {date?.toDateString()}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {events
-                    .filter(event => 
+                  {events.filter(event => 
+                    date && 
+                    event.date.getDate() === date.getDate() && 
+                    event.date.getMonth() === date.getMonth() && 
+                    event.date.getFullYear() === date.getFullYear()
+                  ).length > 0 ? (
+                    events.filter(event => 
                       date && 
-                      event.startTime.toDateString() === date.toDateString()
-                    )
-                    .map(event => (
-                      <div key={event.id} className="flex flex-col space-y-2 p-4 border rounded-md">
-                        <div className="flex justify-between items-start">
-                          <h3 className="font-medium">{event.title}</h3>
-                          {getEventTypeBadge(event.eventType)}
-                        </div>
-                        <p className="text-sm text-gray-500">{event.description}</p>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Clock className="h-4 w-4 mr-1" />
-                          <span>
-                            {event.startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
-                            {event.endTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                          </span>
-                        </div>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span>{event.location.name}, {event.location.address}</span>
-                        </div>
+                      event.date.getDate() === date.getDate() && 
+                      event.date.getMonth() === date.getMonth() && 
+                      event.date.getFullYear() === date.getFullYear()
+                    ).map(event => (
+                      <EventCard key={event.id} event={event} />
+                    ))
+                  ) : (
+                    <div className="text-center py-8">
+                      <CalendarIcon className="mx-auto h-12 w-12 text-gray-400" />
+                      <h3 className="mt-2 text-sm font-medium text-gray-900">No events</h3>
+                      <p className="mt-1 text-sm text-gray-500">No events scheduled for this day.</p>
+                      <div className="mt-6">
+                        <Link to="/events/new">
+                          <Button variant="outline" className="text-sm">
+                            <Plus className="mr-2 h-4 w-4" />
+                            Create Event
+                          </Button>
+                        </Link>
                       </div>
-                    ))}
-                  {date && events.filter(event => 
-                    event.startTime.toDateString() === date.toDateString()
-                  ).length === 0 && (
-                    <p className="text-center text-gray-500 py-8">
-                      No events scheduled for this date
-                    </p>
+                    </div>
                   )}
                 </div>
               </CardContent>
@@ -201,84 +155,131 @@ const EventsPage: React.FC = () => {
           </div>
         </TabsContent>
         
-        <TabsContent value="upcoming">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <TabsContent value="upcoming" className="mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {upcomingEvents.map(event => (
-              <Card key={event.id}>
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg">{event.title}</CardTitle>
-                    {getEventTypeBadge(event.eventType)}
-                  </div>
-                  <CardDescription>{event.startTime.toLocaleDateString()}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm">{event.description}</p>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="h-4 w-4 mr-1" />
-                      <span>
-                        {event.startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - 
-                        {event.endTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                      </span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{event.location.name}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Users className="h-4 w-4 mr-1" />
-                      <span>Expected: {event.expectedAttendance}</span>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button variant="outline" size="sm">View Details</Button>
-                </CardFooter>
-              </Card>
+              <EventCard key={event.id} event={event} />
             ))}
             {upcomingEvents.length === 0 && (
               <div className="col-span-full text-center py-8">
-                <p className="text-gray-500">No upcoming events scheduled</p>
+                <CalendarIcon className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No upcoming events</h3>
+                <p className="mt-1 text-sm text-gray-500">Create your first event to get started.</p>
+                <div className="mt-6">
+                  <Link to="/events/new">
+                    <Button variant="outline" className="text-sm">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Create Event
+                    </Button>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
         </TabsContent>
         
-        <TabsContent value="past">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <TabsContent value="past" className="mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {pastEvents.map(event => (
-              <Card key={event.id} className="opacity-90">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg">{event.title}</CardTitle>
-                    {getEventTypeBadge(event.eventType)}
-                  </div>
-                  <CardDescription>{event.startTime.toLocaleDateString()}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm">{event.description}</p>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span>{event.location.name}</span>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button variant="outline" size="sm">View Report</Button>
-                </CardFooter>
-              </Card>
+              <EventCard key={event.id} event={event} isPast />
             ))}
             {pastEvents.length === 0 && (
               <div className="col-span-full text-center py-8">
-                <p className="text-gray-500">No past events</p>
+                <CalendarIcon className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No past events</h3>
+                <p className="mt-1 text-sm text-gray-500">Your completed events will appear here.</p>
               </div>
             )}
           </div>
         </TabsContent>
       </Tabs>
     </div>
+  );
+};
+
+interface EventCardProps {
+  event: {
+    id: number;
+    title: string;
+    date: Date;
+    location: string;
+    type: string;
+    description: string;
+    attendees: number;
+  };
+  isPast?: boolean;
+}
+
+const EventCard: React.FC<EventCardProps> = ({ event, isPast = false }) => {
+  const eventTypeColors: Record<string, string> = {
+    meeting: `${DNM_THEME.colors.green}`,
+    canvassing: `${DNM_THEME.colors.yellow}`,
+    rally: `${DNM_THEME.colors.red}`,
+    fundraiser: `${DNM_THEME.colors.oliveGreen}`,
+    media: '#0EA5E9',
+    other: '#6C757D'
+  };
+  
+  return (
+    <Card className={`overflow-hidden ${isPast ? 'opacity-75' : ''}`}>
+      <div 
+        className="h-2" 
+        style={{ backgroundColor: eventTypeColors[event.type] || DNM_THEME.colors.green }}
+      />
+      <CardHeader>
+        <CardTitle className="flex items-start justify-between">
+          <span>{event.title}</span>
+          <Badge type={event.type} />
+        </CardTitle>
+        <CardDescription className="flex items-center gap-2">
+          <Clock size={14} />
+          {event.date.toLocaleDateString()}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-2">
+          <div className="flex items-center text-sm">
+            <MapPin size={14} className="mr-2 text-muted-foreground" />
+            <span>{event.location}</span>
+          </div>
+          <div className="flex items-center text-sm">
+            <Users size={14} className="mr-2 text-muted-foreground" />
+            <span>{event.attendees} attendees</span>
+          </div>
+          <p className="text-sm text-muted-foreground mt-2">{event.description}</p>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <Link to={`/events/${event.id}`} className="w-full">
+          <Button variant="outline" className="w-full">
+            View Details
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  );
+};
+
+const Badge: React.FC<{ type: string }> = ({ type }) => {
+  const getTypeStyle = () => {
+    switch (type) {
+      case 'meeting':
+        return 'bg-[#306030]/10 text-[#306030] border-[#306030]';
+      case 'canvassing':
+        return 'bg-[#FFCE00]/10 text-[#806600] border-[#FFCE00]';
+      case 'rally':
+        return 'bg-[#D90000]/10 text-[#D90000] border-[#D90000]';
+      case 'fundraiser':
+        return 'bg-[#4A5D23]/10 text-[#4A5D23] border-[#4A5D23]';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
+  };
+  
+  return (
+    <span className={`text-xs px-2 py-1 rounded-full border ${getTypeStyle()}`}>
+      {type}
+    </span>
   );
 };
 
