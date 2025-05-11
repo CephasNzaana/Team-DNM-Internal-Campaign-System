@@ -13,9 +13,13 @@
 <IfModule mod_mime.c>
   AddType application/javascript .js
   AddType application/javascript .mjs
-  AddType text/javascript .js
-  AddType text/javascript .mjs
+  AddType text/javascript .js .mjs
 </IfModule>
+
+# Fix for module scripts MIME type
+<FilesMatch "\.(js|mjs)$">
+  Header set Content-Type "application/javascript"
+</FilesMatch>
 
 # Enable CORS
 <IfModule mod_headers.c>

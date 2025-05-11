@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -43,13 +44,13 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Campaign Hero Section */}
       <div className="bg-gradient-to-r from-[#306030] to-[#4A5D23] rounded-lg p-6 text-white shadow-lg relative overflow-hidden">
-        {/* DNM image positioned in the right side without circle border */}
+        {/* DNM image positioned in the right side */}
         <div className="absolute top-0 right-0 h-full flex items-center justify-center pr-4 md:pr-8">
-          <div className="hidden md:block h-32 w-32 lg:h-40 lg:w-40 relative">
+          <div className="hidden md:block h-full max-h-[250px] relative">
             <img 
               src="/lovable-uploads/4b0e8586-29c8-409e-a86c-4a005c2130fd.png" 
               alt="Dan Musinguzi Nabaasa"
-              className="h-full w-full object-contain"
+              className="h-full w-auto object-contain"
             />
           </div>
         </div>

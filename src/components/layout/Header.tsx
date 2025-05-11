@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronDown, Menu, User, Bell, Download } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronDown, Menu, User, Bell, Download, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DNM_THEME } from '@/lib/theme';
 import {
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from '@/components/ui/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -23,6 +24,8 @@ const Header: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
   const { toast } = useToast();
+  const { username, userRole, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -60,6 +63,24 @@ const Header: React.FC = () => {
       });
     }
   };
+  
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logged out successfully",
+      description: "You have been logged out of the system.",
+    });
+    navigate('/auth');
+  };
+  
+  const getRoleDisplay = () => {
+    switch(userRole) {
+      case 'honDNM': return 'Hon. DNM';
+      case 'admin': return 'Admin';
+      case 'teamMember': return 'Team Member';
+      default: return 'Guest';
+    }
+  };
 
   return (
     <header className="bg-[#306030] text-white py-3 px-4 md:px-6 shadow-md border-b border-[#4A5D23]">
@@ -95,8 +116,16 @@ const Header: React.FC = () => {
             </Button>
           )}
           
-          <div className="hidden md:block text-sm font-medium bg-[#4A5D23] text-white px-3 py-1 rounded-full">
-            Kabale Municipality
+          <div className="hidden md:flex items-center gap-2">
+            <div className="text-sm font-medium bg-[#4A5D23] text-white px-3 py-1 rounded-full">
+              Kabale Municipality
+            </div>
+            
+            {username && (
+              <div className="text-sm font-medium bg-[#FFCE00] text-black px-3 py-1 rounded-full">
+                {getRoleDisplay()}
+              </div>
+            )}
           </div>
           
           <Link to="/communication/messages">
@@ -110,12 +139,13 @@ const Header: React.FC = () => {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="flex items-center text-white hover:bg-green-700">
                 <User size={20} className="mr-2" />
-                <span className="hidden md:inline">Account</span>
+                <span className="hidden md:inline">{username || 'Account'}</span>
                 <ChevronDown size={16} className="ml-1" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              {username && <DropdownMenuLabel className="text-xs text-gray-500">Logged in as {username}</DropdownMenuLabel>}
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link to="/account" className="cursor-pointer">Profile</Link>
@@ -124,8 +154,9 @@ const Header: React.FC = () => {
                 <Link to="/settings" className="cursor-pointer">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link to="/auth" className="cursor-pointer text-red-600">Logout</Link>
+              <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
+                <LogOut size={16} className="mr-2" />
+                Logout
               </DropdownMenuItem>
               
               {showInstallButton && (

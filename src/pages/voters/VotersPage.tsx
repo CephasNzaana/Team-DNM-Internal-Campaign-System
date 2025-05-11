@@ -12,11 +12,11 @@ import { Progress } from '@/components/ui/progress';
 const SupportLevelIndicator = ({ level }: { level?: number }) => {
   const getSupportLevelColor = (level?: number) => {
     switch(level) {
-      case 1: return 'bg-red-500';
+      case 1: return 'bg-red-500'; // Opposition - Red
       case 2: return 'bg-orange-400';
       case 3: return 'bg-yellow-400';
       case 4: return 'bg-green-400';
-      case 5: return 'bg-green-600';
+      case 5: return 'bg-green-600'; // Strong Support - Green
       default: return 'bg-gray-300';
     }
   };
